@@ -1,0 +1,1194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CURV — Modern Clothing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDF6EE',
+                        sand: '#F5EBD8',
+                        warm: '#E8D5B7',
+                        terracotta: '#C4653A',
+                        terracottaDark: '#A84F28',
+                        charcoal: '#2A2420',
+                        charcoalLight: '#4A403A',
+                        muted: '#8A7E76',
+                        soft: '#C9BFB5',
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['DM Sans', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        '2xl': '1rem',
+                        '3xl': '1.5rem',
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                        '6xl': '3rem',
+                        'full': '9999px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            border-radius: 9999px;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #FDF6EE;
+            color: #2A2420;
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Remove border-radius from specific elements that need it */
+        .no-round {
+            border-radius: 0 !important;
+        }
+
+        .round-sm {
+            border-radius: 0.5rem !important;
+        }
+
+        .round-md {
+            border-radius: 1rem !important;
+        }
+
+        .round-lg {
+            border-radius: 1.5rem !important;
+        }
+
+        .round-xl {
+            border-radius: 2rem !important;
+        }
+
+        .round-2xl {
+            border-radius: 2.5rem !important;
+        }
+
+        .round-full {
+            border-radius: 9999px !important;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F5EBD8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C9BFB5;
+            border-radius: 9999px;
+        }
+
+        /* Hero background animation */
+        .hero-bg {
+            background: linear-gradient(135deg, #FDF6EE 0%, #F5EBD8 30%, #E8D5B7 60%, #C4653A20 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(196, 101, 58, 0.08) 0%, transparent 70%);
+            animation: floatBlob 8s ease-in-out infinite;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -20%;
+            width: 60%;
+            height: 120%;
+            background: radial-gradient(ellipse, rgba(232, 213, 183, 0.4) 0%, transparent 70%);
+            animation: floatBlob 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatBlob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -20px) scale(1.05); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .animate-fade-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .animate-slide-left {
+            animation: slideInLeft 0.8s ease forwards;
+        }
+
+        .animate-scale-in {
+            animation: scaleIn 0.6s ease forwards;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(42, 36, 32, 0.12);
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        .product-img {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .product-card:hover .quick-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quick-view {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #C4653A, #A84F28);
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(196, 101, 58, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid #2A2420;
+            color: #2A2420;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: #2A2420;
+            color: #FDF6EE;
+            transform: translateY(-2px);
+        }
+
+        .category-card {
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 50px rgba(42, 36, 32, 0.15);
+        }
+
+        .category-card:hover .cat-img {
+            transform: scale(1.1);
+        }
+
+        .cat-img {
+            transition: transform 0.8s ease;
+        }
+
+        .marquee {
+            animation: marquee 30s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #C4653A;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: #C4653A;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #C4653A;
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #2A2420;
+            color: #FDF6EE;
+            padding: 16px 32px;
+            z-index: 9999;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .floating-shapes {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-shapes span {
+            position: absolute;
+            display: block;
+            border: 2px solid rgba(196, 101, 58, 0.1);
+            animation: floatShape 20s linear infinite;
+        }
+
+        .floating-shapes span:nth-child(1) {
+            width: 60px; height: 60px;
+            left: 10%; top: 20%;
+            animation-delay: 0s;
+        }
+
+        .floating-shapes span:nth-child(2) {
+            width: 40px; height: 40px;
+            left: 80%; top: 60%;
+            animation-delay: -5s;
+        }
+
+        .floating-shapes span:nth-child(3) {
+            width: 80px; height: 80px;
+            left: 60%; top: 10%;
+            animation-delay: -10s;
+        }
+
+        .floating-shapes span:nth-child(4) {
+            width: 30px; height: 30px;
+            left: 30%; top: 70%;
+            animation-delay: -15s;
+        }
+
+        @keyframes floatShape {
+            0% { transform: rotate(0deg) translate(0, 0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: rotate(360deg) translate(50px, -50px); opacity: 0; }
+        }
+
+        .size-btn {
+            transition: all 0.2s ease;
+        }
+
+        .size-btn:hover, .size-btn.active {
+            background: #2A2420;
+            color: #FDF6EE;
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(42, 36, 32, 0.1);
+        }
+
+        .stagger-in > * {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .stagger-in > *:nth-child(1) { animation-delay: 0.05s; }
+        .stagger-in > *:nth-child(2) { animation-delay: 0.1s; }
+        .stagger-in > *:nth-child(3) { animation-delay: 0.15s; }
+        .stagger-in > *:nth-child(4) { animation-delay: 0.2s; }
+        .stagger-in > *:nth-child(5) { animation-delay: 0.25s; }
+        .stagger-in > *:nth-child(6) { animation-delay: 0.3s; }
+        .stagger-in > *:nth-child(7) { animation-delay: 0.35s; }
+        .stagger-in > *:nth-child(8) { animation-delay: 0.4s; }
+
+        input, select {
+            border-radius: 9999px !important;
+        }
+
+        /* Quick view modal */
+        .modal-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .wishlist-btn {
+            transition: all 0.3s ease;
+        }
+
+        .wishlist-btn:hover, .wishlist-btn.liked {
+            color: #C4653A;
+            transform: scale(1.2);
+        }
+
+        .wishlist-btn.liked {
+            animation: heartPop 0.4s ease;
+        }
+
+        @keyframes heartPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast round-full">
+        <span id="toast-text">Item added to cart</span>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="overlay" class="overlay fixed inset-0 bg-black/40 z-40" onclick="toggleMobileMenu()"></div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-80 h-full bg-cream z-50 p-8 flex flex-col">
+        <button onclick="toggleMobileMenu()" class="self-end mb-8 w-10 h-10 flex items-center justify-center hover:bg-sand transition-colors">
+            <i class="fas fa-times text-lg text-charcoal"></i>
+        </button>
+        <nav class="flex flex-col gap-6">
+            <a href="#" class="text-xl font-display font-semibold text-charcoal hover:text-terracotta transition-colors">New Arrivals</a>
+            <a href="#categories" class="text-xl font-display font-semibold text-charcoal hover:text-terracotta transition-colors">Categories</a>
+            <a href="#products" class="text-xl font-display font-semibold text-charcoal hover:text-terracotta transition-colors">Collection</a>
+            <a href="#testimonials" class="text-xl font-display font-semibold text-charcoal hover:text-terracotta transition-colors">Reviews</a>
+            <a href="#newsletter" class="text-xl font-display font-semibold text-charcoal hover:text-terracotta transition-colors">Contact</a>
+        </nav>
+        <div class="mt-auto">
+            <button class="btn-primary w-full py-4 text-base font-semibold">Shop Now</button>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div id="quickViewModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="modal-content bg-cream max-w-3xl w-full p-8 relative">
+            <button onclick="closeQuickView()" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center hover:bg-sand transition-colors">
+                <i class="fas fa-times text-charcoal"></i>
+            </button>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2 bg-sand round-xl overflow-hidden flex items-center justify-center aspect-square">
+                    <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="md:w-1/2 flex flex-col justify-center">
+                    <span class="text-muted text-sm font-medium uppercase tracking-wider mb-2">CURV Collection</span>
+                    <h3 id="modalTitle" class="font-display text-2xl md:text-3xl font-bold text-charcoal mb-3"></h3>
+                    <div class="flex items-center gap-3 mb-4">
+                        <span id="modalPrice" class="text-2xl font-bold text-terracotta"></span>
+                        <span id="modalOldPrice" class="text-lg text-muted line-through"></span>
+                    </div>
+                    <p class="text-charcoalLight text-sm leading-relaxed mb-6">Crafted from premium organic cotton with a relaxed, contemporary fit. Designed for comfort and style that transitions effortlessly from day to night.</p>
+                    <div class="mb-4">
+                        <span class="text-sm font-semibold text-charcoal mb-3 block">Size</span>
+                        <div class="flex gap-2">
+                            <button class="size-btn w-10 h-10 flex items-center justify-center border-2 border-soft text-sm font-medium text-charcoal hover:border-charcoal">XS</button>
+                            <button class="size-btn w-10 h-10 flex items-center justify-center border-2 border-soft text-sm font-medium text-charcoal hover:border-charcoal active">S</button>
+                            <button class="size-btn w-10 h-10 flex items-center justify-center border-2 border-soft text-sm font-medium text-charcoal hover:border-charcoal">M</button>
+                            <button class="size-btn w-10 h-10 flex items-center justify-center border-2 border-soft text-sm font-medium text-charcoal hover:border-charcoal">L</button>
+                            <button class="size-btn w-10 h-10 flex items-center justify-center border-2 border-soft text-sm font-medium text-charcoal hover:border-charcoal">XL</button>
+                        </div>
+                    </div>
+                    <button onclick="addToCart(); closeQuickView();" class="btn-primary w-full py-4 text-base font-semibold mt-2">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-30 bg-cream/80 backdrop-blur-xl border-b border-sand">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2">
+                    <div class="w-9 h-9 bg-terracotta flex items-center justify-center">
+                        <span class="text-white font-display font-bold text-lg">C</span>
+                    </div>
+                    <span class="font-display text-xl font-bold text-charcoal tracking-tight">CURV</span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#" class="nav-link text-sm font-medium text-charcoal">New Arrivals</a>
+                    <a href="#categories" class="nav-link text-sm font-medium text-charcoal">Categories</a>
+                    <a href="#products" class="nav-link text-sm font-medium text-charcoal">Collection</a>
+                    <a href="#testimonials" class="nav-link text-sm font-medium text-charcoal">Reviews</a>
+                </nav>
+
+                <!-- Right Actions -->
+                <div class="flex items-center gap-3">
+                    <button class="w-10 h-10 flex items-center justify-center hover:bg-sand transition-colors text-charcoal" aria-label="Search" onclick="toggleSearch()">
+                        <i class="fas fa-search text-sm"></i>
+                    </button>
+                    <button class="w-10 h-10 flex items-center justify-center hover:bg-sand transition-colors text-charcoal relative" aria-label="Cart">
+                        <i class="fas fa-shopping-bag text-sm"></i>
+                        <span id="cartCount" class="cart-badge round-full">0</span>
+                    </button>
+                    <button class="md:hidden w-10 h-10 flex items-center justify-center hover:bg-sand transition-colors text-charcoal" aria-label="Menu" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div id="searchBar" class="overflow-hidden max-h-0 transition-all duration-300">
+            <div class="max-w-2xl mx-auto px-4 pb-4">
+                <div class="relative">
+                    <input type="text" placeholder="Search for clothing, styles, collections..." class="w-full py-3 pl-12 pr-4 bg-sand border-2 border-warm text-charcoal placeholder-muted text-sm focus:outline-none focus:border-terracotta transition-colors">
+                    <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-muted text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-28 md:pt-36 pb-16 md:pb-24 relative">
+        <div class="floating-shapes">
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                <!-- Left Content -->
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <div class="animate-fade-up opacity-0">
+                        <span class="inline-block px-5 py-2 bg-terracotta/10 text-terracotta text-xs font-semibold uppercase tracking-widest mb-6">New Season 2025</span>
+                    </div>
+                    <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-900 text-charcoal leading-[0.95] mb-6 animate-fade-up opacity-0 delay-100">
+                        Wear<br>
+                        <span class="text-terracotta">Your</span><br>
+                        Story
+                    </h1>
+                    <p class="text-charcoalLight text-base md:text-lg max-w-md mx-auto lg:mx-0 mb-8 leading-relaxed animate-fade-up opacity-0 delay-200">
+                        Curated collections that blend timeless elegance with modern silhouettes. Every piece, a statement.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up opacity-0 delay-300">
+                        <a href="#products" class="btn-primary px-8 py-4 text-base font-semibold inline-flex items-center justify-center gap-2">
+                            Explore Collection <i class="fas fa-arrow-right text-sm"></i>
+                        </a>
+                        <a href="#categories" class="btn-outline px-8 py-4 text-base font-semibold inline-flex items-center justify-center gap-2">
+                            Browse Categories
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-8 mt-10 justify-center lg:justify-start animate-fade-up opacity-0 delay-400">
+                        <div>
+                            <span class="block font-display text-2xl font-bold text-charcoal">2K+</span>
+                            <span class="text-xs text-muted font-medium">Products</span>
+                        </div>
+                        <div class="w-px h-10 bg-soft"></div>
+                        <div>
+                            <span class="block font-display text-2xl font-bold text-charcoal">50+</span>
+                            <span class="text-xs text-muted font-medium">Brands</span>
+                        </div>
+                        <div class="w-px h-10 bg-soft"></div>
+                        <div>
+                            <span class="block font-display text-2xl font-bold text-charcoal">4.9</span>
+                            <span class="text-xs text-muted font-medium">Rating</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Image Grid -->
+                <div class="lg:w-1/2 grid grid-cols-2 gap-4 animate-scale-in opacity-0 delay-200">
+                    <div class="space-y-4">
+                        <div class="round-2xl overflow-hidden bg-sand aspect-[3/4]">
+                            <img src="https://picsum.photos/seed/curv1/400/530.jpg" alt="Fashion model" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="round-2xl overflow-hidden bg-terracotta p-5 text-white text-center">
+                            <span class="font-display text-3xl font-bold block">30%</span>
+                            <span class="text-sm opacity-80">Off First Order</span>
+                        </div>
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <div class="round-2xl overflow-hidden bg-sand aspect-square flex items-center justify-center">
+                            <img src="https://picsum.photos/seed/curv2/400/400.jpg" alt="Fashion detail" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="round-2xl overflow-hidden bg-sand aspect-[3/4]">
+                            <img src="https://picsum.photos/seed/curv3/400/530.jpg" alt="Fashion model" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee Banner -->
+    <section class="bg-charcoal py-4 overflow-hidden">
+        <div class="marquee whitespace-nowrap flex items-center gap-8 text-cream/70 text-sm font-medium">
+            <span>Free Shipping Over $100</span>
+            <span class="text-terracotta">&#9670;</span>
+            <span>Sustainable Fashion</span>
+            <span class="text-terracotta">&#9670;</span>
+            <span>30-Day Returns</span>
+            <span class="text-terracotta">&#9670;</span>
+            <span>Premium Quality</span>
+            <span class="text-terracotta">&#9670;</span>
+            <span>Handcrafted Details</span>
+            <span class="text-terracotta">&#9670;</span>
+            <span>Free Shipping Over $100</span>
+            <span class="text-terracotta">&#9670;</span>
+            <span>Sustainable Fashion</span>
+            <span class="text-terracotta">&#9670;</span>
+            <span>30-Day Returns</span>
+            <span class="text-terracotta">&#9670;</span>
+            <span>Premium Quality</span>
+            <span class="text-terracotta">&#9670;</span>
+            <span>Handcrafted Details</span>
+            <span class="text-terracotta">&#9670;</span>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <span class="text-terracotta text-xs font-semibold uppercase tracking-widest">Browse By</span>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal mt-3">Categories</h2>
+                <p class="text-muted mt-3 max-w-lg mx-auto">Find your perfect piece from our carefully curated categories</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 stagger-in">
+                <div class="category-card round-2xl bg-sand aspect-[3/4] relative cursor-pointer group" onclick="filterProducts('Dresses')">
+                    <img src="https://picsum.photos/seed/catdress/400/530.jpg" alt="Dresses" class="cat-img w-full h-full object-cover round-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent round-2xl"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5">
+                        <h3 class="font-display text-xl font-bold text-white">Dresses</h3>
+                        <span class="text-cream/70 text-sm">48 items</span>
+                    </div>
+                </div>
+                <div class="category-card round-2xl bg-sand aspect-[3/4] relative cursor-pointer group" onclick="filterProducts('Tops')">
+                    <img src="https://picsum.photos/seed/cattops/400/530.jpg" alt="Tops" class="cat-img w-full h-full object-cover round-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent round-2xl"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5">
+                        <h3 class="font-display text-xl font-bold text-white">Tops</h3>
+                        <span class="text-cream/70 text-sm">72 items</span>
+                    </div>
+                </div>
+                <div class="category-card round-2xl bg-sand aspect-[3/4] relative cursor-pointer group" onclick="filterProducts('Bottoms')">
+                    <img src="https://picsum.photos/seed/catbottom/400/530.jpg" alt="Bottoms" class="cat-img w-full h-full object-cover round-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent round-2xl"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5">
+                        <h3 class="font-display text-xl font-bold text-white">Bottoms</h3>
+                        <span class="text-cream/70 text-sm">56 items</span>
+                    </div>
+                </div>
+                <div class="category-card round-2xl bg-sand aspect-[3/4] relative cursor-pointer group" onclick="filterProducts('Outerwear')">
+                    <img src="https://picsum.photos/seed/catouter/400/530.jpg" alt="Outerwear" class="cat-img w-full h-full object-cover round-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent round-2xl"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5">
+                        <h3 class="font-display text-xl font-bold text-white">Outerwear</h3>
+                        <span class="text-cream/70 text-sm">34 items</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 md:py-28 bg-sand/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-14 gap-4">
+                <div>
+                    <span class="text-terracotta text-xs font-semibold uppercase tracking-widest">Curated For You</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal mt-3">Featured Collection</h2>
+                </div>
+                <div class="flex gap-2 flex-wrap" id="filterBtns">
+                    <button onclick="filterProducts('All')" class="filter-btn active px-5 py-2 text-sm font-medium bg-charcoal text-cream transition-all">All</button>
+                    <button onclick="filterProducts('Dresses')" class="filter-btn px-5 py-2 text-sm font-medium bg-cream text-charcoal border-2 border-soft hover:border-charcoal transition-all">Dresses</button>
+                    <button onclick="filterProducts('Tops')" class="filter-btn px-5 py-2 text-sm font-medium bg-cream text-charcoal border-2 border-soft hover:border-charcoal transition-all">Tops</button>
+                    <button onclick="filterProducts('Bottoms')" class="filter-btn px-5 py-2 text-sm font-medium bg-cream text-charcoal border-2 border-soft hover:border-charcoal transition-all">Bottoms</button>
+                    <button onclick="filterProducts('Outerwear')" class="filter-btn px-5 py-2 text-sm font-medium bg-cream text-charcoal border-2 border-soft hover:border-charcoal transition-all">Outerwear</button>
+                </div>
+            </div>
+            <div id="productGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 stagger-in">
+                <!-- Products injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Banner -->
+    <section class="py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="round-3xl bg-charcoal p-8 md:p-14 lg:p-20 flex flex-col lg:flex-row items-center gap-10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-terracotta/10 round-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-warm/10 round-full blur-3xl"></div>
+                <div class="lg:w-1/2 relative z-10">
+                    <span class="text-terracotta text-xs font-semibold uppercase tracking-widest">Limited Edition</span>
+                    <h2 class="font-display text-4xl md:text-6xl font-bold text-cream mt-4 leading-tight">The Autumn<br>Essentials</h2>
+                    <p class="text-cream/60 mt-5 max-w-md leading-relaxed">Discover our handpicked autumn collection featuring warm tones, layered textures, and timeless silhouettes designed for the season.</p>
+                    <a href="#" class="btn-primary inline-flex items-center gap-2 px-8 py-4 text-base font-semibold mt-8">
+                        Shop the Edit <i class="fas fa-arrow-right text-sm"></i>
+                    </a>
+                </div>
+                <div class="lg:w-1/2 grid grid-cols-2 gap-4 relative z-10">
+                    <div class="round-2xl overflow-hidden aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/autumn1/400/530.jpg" alt="Autumn collection" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="round-2xl overflow-hidden aspect-[3/4] mt-8">
+                        <img src="https://picsum.photos/seed/autumn2/400/530.jpg" alt="Autumn collection" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 md:py-20 bg-sand/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div class="bg-cream p-6 md:p-8 text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-14 h-14 bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-truck text-terracotta text-lg"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-charcoal mb-1">Free Shipping</h3>
+                    <p class="text-muted text-sm">On orders over $100</p>
+                </div>
+                <div class="bg-cream p-6 md:p-8 text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-14 h-14 bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-undo text-terracotta text-lg"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-charcoal mb-1">Easy Returns</h3>
+                    <p class="text-muted text-sm">30-day return policy</p>
+                </div>
+                <div class="bg-cream p-6 md:p-8 text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-14 h-14 bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-terracotta text-lg"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-charcoal mb-1">Secure Payment</h3>
+                    <p class="text-muted text-sm">100% protected</p>
+                </div>
+                <div class="bg-cream p-6 md:p-8 text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-14 h-14 bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-leaf text-terracotta text-lg"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-charcoal mb-1">Sustainable</h3>
+                    <p class="text-muted text-sm">Eco-friendly materials</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <span class="text-terracotta text-xs font-semibold uppercase tracking-widest">What People Say</span>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal mt-3">Customer Reviews</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="testimonial-card bg-cream p-8 border border-sand">
+                    <div class="flex gap-1 mb-4">
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                    </div>
+                    <p class="text-charcoalLight leading-relaxed mb-6">"The quality exceeded my expectations. Every stitch feels premium, and the fit is absolutely perfect. CURV has become my go-to for wardrobe essentials."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 bg-terracotta/10 flex items-center justify-center">
+                            <span class="font-display font-bold text-terracotta">S</span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-charcoal text-sm block">Sarah Mitchell</span>
+                            <span class="text-muted text-xs">Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card bg-cream p-8 border border-sand">
+                    <div class="flex gap-1 mb-4">
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                    </div>
+                    <p class="text-charcoalLight leading-relaxed mb-6">"Finally found a brand that understands modern fashion. The silhouettes are unique, and I love that everything is sustainably made. Worth every penny."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 bg-warm flex items-center justify-center">
+                            <span class="font-display font-bold text-charcoal">J</span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-charcoal text-sm block">James Chen</span>
+                            <span class="text-muted text-xs">Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card bg-cream p-8 border border-sand">
+                    <div class="flex gap-1 mb-4">
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star text-terracotta text-sm"></i>
+                        <i class="fas fa-star-half-alt text-terracotta text-sm"></i>
+                    </div>
+                    <p class="text-charcoalLight leading-relaxed mb-6">"Ordered the autumn bundle and every piece was stunning. The packaging was beautiful too — felt like opening a gift. Will definitely order again."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 bg-terracotta/10 flex items-center justify-center">
+                            <span class="font-display font-bold text-terracotta">A</span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-charcoal text-sm block">Amira Patel</span>
+                            <span class="text-muted text-xs">Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section id="newsletter" class="py-20 md:py-28 bg-sand/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="round-3xl bg-cream p-8 md:p-14 text-center border border-sand relative overflow-hidden">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-terracotta/5 round-full blur-3xl"></div>
+                <div class="relative z-10">
+                    <span class="text-terracotta text-xs font-semibold uppercase tracking-widest">Stay Connected</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal mt-3 mb-4">Join the CURV Family</h2>
+                    <p class="text-muted max-w-md mx-auto mb-8">Subscribe for early access to new collections, exclusive offers, and style inspiration delivered to your inbox.</p>
+                    <form id="newsletterForm" onsubmit="handleNewsletter(event)" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                        <input type="email" id="emailInput" required placeholder="Enter your email address" class="flex-1 py-4 px-6 bg-sand border-2 border-warm text-charcoal placeholder-muted text-sm focus:outline-none focus:border-terracotta transition-colors">
+                        <button type="submit" class="btn-primary px-8 py-4 text-base font-semibold whitespace-nowrap">Subscribe</button>
+                    </form>
+                    <p id="newsletterMsg" class="text-sm text-terracotta mt-4 hidden">Welcome to the family! Check your inbox for a special surprise.</p>
+                    <p class="text-xs text-muted mt-4">No spam, unsubscribe anytime. We respect your privacy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12 border-b border-cream/10">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-5">
+                        <div class="w-9 h-9 bg-terracotta flex items-center justify-center">
+                            <span class="text-white font-display font-bold text-lg">C</span>
+                        </div>
+                        <span class="font-display text-xl font-bold text-cream tracking-tight">CURV</span>
+                    </div>
+                    <p class="text-cream/50 text-sm leading-relaxed mb-5 max-w-xs">Modern clothing for the contemporary individual. Sustainable, stylish, and made to last.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-cream/10 flex items-center justify-center hover:bg-terracotta transition-colors text-cream/60 hover:text-white">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-cream/10 flex items-center justify-center hover:bg-terracotta transition-colors text-cream/60 hover:text-white">
+                            <i class="fab fa-twitter text-sm"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-cream/10 flex items-center justify-center hover:bg-terracotta transition-colors text-cream/60 hover:text-white">
+                            <i class="fab fa-pinterest text-sm"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-cream/10 flex items-center justify-center hover:bg-terracotta transition-colors text-cream/60 hover:text-white">
+                            <i class="fab fa-tiktok text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-display font-bold text-cream mb-5">Shop</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">New Arrivals</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Best Sellers</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Dresses</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Tops</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Sale</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-bold text-cream mb-5">Help</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Shipping Info</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Returns</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Size Guide</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-bold text-cream mb-5">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Our Story</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Sustainability</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Press</a></li>
+                        <li><a href="#" class="text-cream/50 text-sm hover:text-terracotta transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row items-center justify-between pt-8 gap-4">
+                <p class="text-cream/30 text-sm">2025 CURV. All rights reserved.</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-8 bg-cream/10 flex items-center justify-center">
+                        <i class="fab fa-cc-visa text-cream/40"></i>
+                    </div>
+                    <div class="w-12 h-8 bg-cream/10 flex items-center justify-center">
+                        <i class="fab fa-cc-mastercard text-cream/40"></i>
+                    </div>
+                    <div class="w-12 h-8 bg-cream/10 flex items-center justify-center">
+                        <i class="fab fa-cc-amex text-cream/40"></i>
+                    </div>
+                    <div class="w-12 h-8 bg-cream/10 flex items-center justify-center">
+                        <i class="fab fa-cc-paypal text-cream/40"></i>
+                    </div>
+                    <div class="w-12 h-8 bg-cream/10 flex items-center justify-center">
+                        <i class="fab fa-cc-apple-pay text-cream/40"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Product Data
+        const products = [
+            { id: 1, name: "Silk Wrap Dress", category: "Dresses", price: 189, oldPrice: 249, img: "curvp1", tag: "Sale" },
+            { id: 2, name: "Linen Oversized Shirt", category: "Tops", price: 95, oldPrice: null, img: "curvp2", tag: "New" },
+            { id: 3, name: "Tailored Wide Trousers", category: "Bottoms", price: 135, oldPrice: null, img: "curvp3", tag: null },
+            { id: 4, name: "Wool Blend Coat", category: "Outerwear", price: 295, oldPrice: 380, img: "curvp4", tag: "Sale" },
+            { id: 5, name: "Ribbed Knit Top", category: "Tops", price: 68, oldPrice: null, img: "curvp5", tag: "New" },
+            { id: 6, name: "Pleated Midi Skirt", category: "Bottoms", price: 115, oldPrice: null, img: "curvp6", tag: null },
+            { id: 7, name: "Cotton Maxi Dress", category: "Dresses", price: 159, oldPrice: 199, img: "curvp7", tag: "Sale" },
+            { id: 8, name: "Quilted Bomber Jacket", category: "Outerwear", price: 245, oldPrice: null, img: "curvp8", tag: "New" },
+        ];
+
+        let cartCount = 0;
+        let currentFilter = 'All';
+
+        // Render Products
+        function renderProducts(filter = 'All') {
+            currentFilter = filter;
+            const grid = document.getElementById('productGrid');
+            const filtered = filter === 'All' ? products : products.filter(p => p.category === filter);
+
+            grid.innerHTML = '';
+
+            filtered.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'product-card bg-cream round-2xl overflow-hidden border border-sand/80';
+                card.style.animationDelay = `${index * 0.05}s`;
+                card.innerHTML = `
+                    <div class="relative aspect-[3/4] bg-sand overflow-hidden">
+                        <img src="https://picsum.photos/seed/${product.img}/400/530.jpg" alt="${product.name}" class="product-img w-full h-full object-cover">
+                        ${product.tag ? `<span class="absolute top-4 left-4 px-3 py-1 text-xs font-semibold ${product.tag === 'Sale' ? 'bg-terracotta text-white' : 'bg-charcoal text-cream'}">${product.tag}</span>` : ''}
+                        <button class="wishlist-btn absolute top-4 right-4 w-9 h-9 bg-cream/80 backdrop-blur flex items-center justify-center text-charcoal" onclick="toggleWishlist(this, event)">
+                            <i class="far fa-heart text-sm"></i>
+                        </button>
+                        <div class="quick-view absolute bottom-4 left-4 right-4">
+                            <button onclick="openQuickView(${product.id})" class="w-full py-3 bg-charcoal/90 backdrop-blur text-cream text-sm font-semibold hover:bg-charcoal transition-colors">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <span class="text-xs text-muted font-medium uppercase tracking-wider">${product.category}</span>
+                        <h3 class="font-display font-bold text-charcoal mt-1 text-sm md:text-base leading-snug">${product.name}</h3>
+                        <div class="flex items-center gap-2 mt-2">
+                            <span class="font-bold text-terracotta">$${product.price}</span>
+                            ${product.oldPrice ? `<span class="text-sm text-muted line-through">$${product.oldPrice}</span>` : ''}
+                        </div>
+                        <button onclick="addToCart()" class="w-full mt-3 py-2.5 border-2 border-charcoal text-charcoal text-sm font-semibold hover:bg-charcoal hover:text-cream transition-all">Add to Cart</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const btnText = btn.textContent.trim();
+                if (btnText === filter) {
+                    btn.className = 'filter-btn active px-5 py-2 text-sm font-medium bg-charcoal text-cream transition-all';
+                } else {
+                    btn.className = 'filter-btn px-5 py-2 text-sm font-medium bg-cream text-charcoal border-2 border-soft hover:border-charcoal transition-all';
+                }
+            });
+        }
+
+        function filterProducts(category) {
+            renderProducts(category);
+        }
+
+        // Cart
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').textContent = cartCount;
+            document.getElementById('cartCount').style.animation = 'none';
+            document.getElementById('cartCount').offsetHeight;
+            document.getElementById('cartCount').style.animation = 'heartPop 0.4s ease';
+            showToast('Item added to cart');
+        }
+
+        // Wishlist
+        function toggleWishlist(btn, e) {
+            e.stopPropagation();
+            btn.classList.toggle('liked');
+            const icon = btn.querySelector('i');
+            if (btn.classList.contains('liked')) {
+                icon.className = 'fas fa-heart text-sm';
+                showToast('Added to wishlist');
+            } else {
+                icon.className = 'far fa-heart text-sm';
+                showToast('Removed from wishlist');
+            }
+        }
+
+        // Quick View
+        function openQuickView(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            document.getElementById('modalImg').src = `https://picsum.photos/seed/${product.img}/600/600.jpg`;
+            document.getElementById('modalImg').alt = product.name;
+            document.getElementById('modalTitle').textContent = product.name;
+            document.getElementById('modalPrice').textContent = `$${product.price}`;
+            document.getElementById('modalOldPrice').textContent = product.oldPrice ? `$${product.oldPrice}` : '';
+            document.getElementById('quickViewModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeQuickView() {
+            document.getElementById('quickViewModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('quickViewModal').addEventListener('click', function(e) {
+            if (e.target === this) closeQuickView();
+        });
+
+        // Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Search
+        function toggleSearch() {
+            const bar = document.getElementById('searchBar');
+            if (bar.style.maxHeight && bar.style.maxHeight !== '0px') {
+                bar.style.maxHeight = '0px';
+            } else {
+                bar.style.maxHeight = '100px';
+                bar.querySelector('input').focus();
+            }
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('overlay');
+            menu.classList.toggle('open');
+            overlay.classList.toggle('open');
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+        }
+
+        // Newsletter
+        function handleNewsletter(e) {
+            e.preventDefault();
+            document.getElementById('newsletterMsg').classList.remove('hidden');
+            document.getElementById('emailInput').value = '';
+            showToast('Successfully subscribed!');
+        }
+
+        // Scroll animations with IntersectionObserver
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe sections for scroll animation
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Make hero always visible
+        const hero = document.querySelector('.hero-bg');
+        if (hero) {
+            hero.style.opacity = '1';
+            hero.style.transform = 'none';
+        }
+        const marquee = document.querySelector('.marquee');
+        if (marquee) {
+            const marqueeSection = marquee.closest('section');
+            if (marqueeSection) {
+                marqueeSection.style.opacity = '1';
+                marqueeSection.style.transform = 'none';
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu if open
+                    const menu = document.getElementById('mobileMenu');
+                    if (menu.classList.contains('open')) toggleMobileMenu();
+                }
+            });
+        });
+
+        // Keyboard support for closing modals
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeQuickView();
+                const menu = document.getElementById('mobileMenu');
+                if (menu.classList.contains('open')) toggleMobileMenu();
+                const searchBar = document.getElementById('searchBar');
+                if (searchBar.style.maxHeight && searchBar.style.maxHeight !== '0px') {
+                    searchBar.style.maxHeight = '0px';
+                }
+            }
+        });
+
+        // Size buttons in modal
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('size-btn')) {
+                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+            }
+        });
+
+        // Initialize
+        renderProducts('All');
+    </script>
+</body>
+</html>
